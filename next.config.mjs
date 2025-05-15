@@ -14,6 +14,8 @@ const nextConfig = {
     remotePatterns: [],
     unoptimized: true,
   },
+  // Add output: 'standalone' for better deployment performance
+  output: 'standalone',
 }
 
 export default nextConfig

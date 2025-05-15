@@ -19,18 +19,24 @@ import Cookies from "js-cookie"
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
-  const { cartItems } = useCart()
+  const { getItemCount } = useCart()
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [isClient, setIsClient] = useState(false)
+  const [itemCount, setItemCount] = useState(0)
 
-  // Get user email from cookie
+  // Get user email from cookie and set client state
   useEffect(() => {
     setIsClient(true)
     const email = Cookies.get("user-email")
     setUserEmail(email || null)
-  }, [])
 
-  const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0)
+    // Safely get item count after component mounts
+    try {
+      setItemCount(getItemCount())
+    } catch (error) {
+      console.error("Error getting item count:", error)
+    }
+  }, [getItemCount])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -104,9 +110,9 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           <Link href="/cart" className="relative">
             <ShoppingCart className="h-5 w-5 text-gray-600" />
-            {totalItems > 0 && (
+            {isClient && itemCount > 0 && (
               <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-primary-700 text-[10px] font-medium text-white">
-                {totalItems}
+                {itemCount}
               </span>
             )}
             <span className="sr-only">Cart</span>

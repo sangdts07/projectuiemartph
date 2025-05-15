@@ -22,27 +22,47 @@ interface CartContextType {
   }
 }
 
-const CartContext = createContext<CartContextType | undefined>(undefined)
+// Create a default context value to avoid undefined errors
+const defaultContextValue: CartContextType = {
+  items: [],
+  addToCart: () => {},
+  removeFromCart: () => {},
+  updateQuantity: () => {},
+  clearCart: () => {},
+  getCartTotal: () => 0,
+  getItemCount: () => 0,
+  getDeliveryDiscount: () => ({ percentage: 0, amount: 0 }),
+}
+
+const CartContext = createContext<CartContextType>(defaultContextValue)
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
+  const [isClient, setIsClient] = useState(false)
 
-  // Load cart from localStorage on initial render
+  // Set client-side flag and load cart from localStorage on initial render
   useEffect(() => {
-    const savedCart = localStorage.getItem("cart")
-    if (savedCart) {
-      try {
+    setIsClient(true)
+    try {
+      const savedCart = localStorage.getItem("cart")
+      if (savedCart) {
         setItems(JSON.parse(savedCart))
-      } catch (e) {
-        console.error("Failed to parse saved cart", e)
       }
+    } catch (e) {
+      console.error("Failed to parse saved cart", e)
     }
   }, [])
 
-  // Save cart to localStorage whenever it changes
+  // Save cart to localStorage whenever it changes, but only on client
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(items))
-  }, [items])
+    if (isClient && items.length > 0) {
+      try {
+        localStorage.setItem("cart", JSON.stringify(items))
+      } catch (e) {
+        console.error("Failed to save cart to localStorage", e)
+      }
+    }
+  }, [items, isClient])
 
   const addToCart = (fish: Fish, quantity: number) => {
     setItems((prevItems) => {
@@ -71,6 +91,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const clearCart = () => {
     setItems([])
+    if (isClient) {
+      try {
+        localStorage.removeItem("cart")
+      } catch (e) {
+        console.error("Failed to clear cart from localStorage", e)
+      }
+    }
   }
 
   const getCartTotal = () => {
@@ -78,6 +105,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }
 
   const getItemCount = () => {
+    if (!items || items.length === 0) return 0
     return items.reduce((count, item) => count + item.quantity, 0)
   }
 
@@ -133,8 +161,5 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
 export function useCart() {
   const context = useContext(CartContext)
-  if (context === undefined) {
-    throw new Error("useCart must be used within a CartProvider")
-  }
   return context
 }

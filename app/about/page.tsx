@@ -29,7 +29,7 @@ export default function AboutPage() {
               </div>
               <div className="relative aspect-video overflow-hidden rounded-xl lg:aspect-square">
                 <Image
-                  src="/placeholder.svg?key=0qxkx"
+                  src="/placeholder-83z3n.png"
                   alt="Filipino fishermen with traditional boats"
                   width={600}
                   height={600}
@@ -201,7 +201,7 @@ export default function AboutPage() {
                     <div className="hidden md:block absolute -left-12 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-full bg-primary-700 border-4 border-white"></div>
                     <div className="rounded-lg overflow-hidden">
                       <Image
-                        src="/placeholder.svg?key=c3n6n"
+                        src="/placeholder-h96pt.png"
                         alt="eMart Fish Market founding team"
                         width={500}
                         height={300}
@@ -216,7 +216,7 @@ export default function AboutPage() {
                     <div className="hidden md:block absolute -right-12 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-full bg-teal-500 border-4 border-white"></div>
                     <div className="rounded-lg overflow-hidden">
                       <Image
-                        src="/placeholder.svg?key=2x9eg"
+                        src="/placeholder-s8ps5.png"
                         alt="Partnership with local fishing communities"
                         width={500}
                         height={300}
@@ -247,7 +247,7 @@ export default function AboutPage() {
                     <div className="hidden md:block absolute -left-12 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-full bg-teal-500 border-4 border-white"></div>
                     <div className="rounded-lg overflow-hidden">
                       <Image
-                        src="/placeholder.svg?key=otd6c"
+                        src="/placeholder-re770.png"
                         alt="Sustainability initiatives"
                         width={500}
                         height={300}
@@ -262,7 +262,7 @@ export default function AboutPage() {
                     <div className="hidden md:block absolute -right-12 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-full bg-teal-500 border-4 border-white"></div>
                     <div className="rounded-lg overflow-hidden">
                       <Image
-                        src="/placeholder.svg?key=wcod6"
+                        src="/placeholder-diegf.png"
                         alt="New processing facility"
                         width={500}
                         height={300}
@@ -293,7 +293,7 @@ export default function AboutPage() {
                     <div className="hidden md:block absolute -left-12 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-full bg-teal-500 border-4 border-white"></div>
                     <div className="rounded-lg overflow-hidden">
                       <Image
-                        src="/placeholder.svg?key=4iou8"
+                        src="/placeholder.svg?height=300&width=500&query=eMart Fish Market today"
                         alt="eMart Fish Market today"
                         width={500}
                         height={300}
@@ -319,7 +319,12 @@ export default function AboutPage() {
             <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               <div className="flex flex-col items-center">
                 <div className="relative w-40 h-40 rounded-full overflow-hidden mb-4">
-                  <Image src="/placeholder.svg?key=mds4t" alt="Marco Santos" fill className="object-cover" />
+                  <Image
+                    src="/placeholder.svg?height=160&width=160&query=Marco Santos"
+                    alt="Marco Santos"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <h3 className="text-xl font-bold">Marco Santos</h3>
                 <p className="text-primary-700">Co-Founder & CEO</p>
@@ -329,7 +334,12 @@ export default function AboutPage() {
               </div>
               <div className="flex flex-col items-center">
                 <div className="relative w-40 h-40 rounded-full overflow-hidden mb-4">
-                  <Image src="/placeholder.svg?key=3lqao" alt="Isabella Reyes" fill className="object-cover" />
+                  <Image
+                    src="/placeholder.svg?height=160&width=160&query=Isabella Reyes"
+                    alt="Isabella Reyes"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <h3 className="text-xl font-bold">Isabella Reyes</h3>
                 <p className="text-teal-600">Co-Founder & COO</p>
@@ -339,7 +349,12 @@ export default function AboutPage() {
               </div>
               <div className="flex flex-col items-center">
                 <div className="relative w-40 h-40 rounded-full overflow-hidden mb-4">
-                  <Image src="/placeholder.svg?key=4gpq6" alt="Gabriel Lim" fill className="object-cover" />
+                  <Image
+                    src="/placeholder.svg?height=160&width=160&query=Gabriel Lim"
+                    alt="Gabriel Lim"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <h3 className="text-xl font-bold">Gabriel Lim</h3>
                 <p className="text-teal-600">Co-Founder & CTO</p>
@@ -349,7 +364,12 @@ export default function AboutPage() {
               </div>
               <div className="flex flex-col items-center">
                 <div className="relative w-40 h-40 rounded-full overflow-hidden mb-4">
-                  <Image src="/placeholder.svg?key=gz1zk" alt="Chef Maria Domingo" fill className="object-cover" />
+                  <Image
+                    src="/placeholder.svg?height=160&width=160&query=Chef Maria Domingo"
+                    alt="Chef Maria Domingo"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <h3 className="text-xl font-bold">Chef Maria Domingo</h3>
                 <p className="text-teal-600">Culinary Director</p>
@@ -400,7 +420,12 @@ export default function AboutPage() {
                     <CardContent className="p-6">
                       <div className="flex items-center gap-4 mb-4">
                         <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                          <Image src="/placeholder.svg?key=ksigs" alt="Ramon Dela Cruz" fill className="object-cover" />
+                          <Image
+                            src="/placeholder.svg?height=48&width=48&query=Ramon Dela Cruz"
+                            alt="Ramon Dela Cruz"
+                            fill
+                            className="object-cover"
+                          />
                         </div>
                         <div>
                           <h4 className="font-bold">Ramon Dela Cruz</h4>
@@ -417,7 +442,12 @@ export default function AboutPage() {
                     <CardContent className="p-6">
                       <div className="flex items-center gap-4 mb-4">
                         <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                          <Image src="/placeholder.svg?key=jkg0r" alt="Lola Carmen" fill className="object-cover" />
+                          <Image
+                            src="/placeholder.svg?height=48&width=48&query=Lola Carmen"
+                            alt="Lola Carmen"
+                            fill
+                            className="object-cover"
+                          />
                         </div>
                         <div>
                           <h4 className="font-bold">Lola Carmen</h4>
@@ -439,7 +469,7 @@ export default function AboutPage() {
                       <div className="flex items-center gap-4 mb-4">
                         <div className="relative w-12 h-12 rounded-full overflow-hidden">
                           <Image
-                            src="/placeholder.svg?key=dkncw"
+                            src="/placeholder.svg?height=48&width=48&query=Chef Paolo Mendoza"
                             alt="Chef Paolo Mendoza"
                             fill
                             className="object-cover"
@@ -460,7 +490,12 @@ export default function AboutPage() {
                     <CardContent className="p-6">
                       <div className="flex items-center gap-4 mb-4">
                         <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                          <Image src="/placeholder.svg?key=12flh" alt="Elena Santos" fill className="object-cover" />
+                          <Image
+                            src="/placeholder.svg?height=48&width=48&query=Elena Santos"
+                            alt="Elena Santos"
+                            fill
+                            className="object-cover"
+                          />
                         </div>
                         <div>
                           <h4 className="font-bold">Elena Santos</h4>
@@ -477,7 +512,12 @@ export default function AboutPage() {
                     <CardContent className="p-6">
                       <div className="flex items-center gap-4 mb-4">
                         <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                          <Image src="/placeholder.svg?key=jatp6" alt="Miguel Tan" fill className="object-cover" />
+                          <Image
+                            src="/placeholder.svg?height=48&width=48&query=Miguel Tan"
+                            alt="Miguel Tan"
+                            fill
+                            className="object-cover"
+                          />
                         </div>
                         <div>
                           <h4 className="font-bold">Miguel Tan</h4>
@@ -512,7 +552,7 @@ export default function AboutPage() {
                 <CardContent className="p-6 flex flex-col items-center text-center">
                   <div className="relative w-24 h-24 mb-4">
                     <Image
-                      src="/placeholder.svg?key=a3eor"
+                      src="/placeholder.svg?height=96&width=96&query=Sustainable Seafood Certification"
                       alt="Sustainable Seafood Certification"
                       fill
                       className="object-contain"
@@ -528,7 +568,7 @@ export default function AboutPage() {
                 <CardContent className="p-6 flex flex-col items-center text-center">
                   <div className="relative w-24 h-24 mb-4">
                     <Image
-                      src="/placeholder.svg?key=fd61g"
+                      src="/placeholder.svg?height=96&width=96&query=Food Safety Certification"
                       alt="Food Safety Certification"
                       fill
                       className="object-contain"
@@ -584,7 +624,7 @@ export default function AboutPage() {
               </div>
               <div className="relative aspect-video overflow-hidden rounded-xl lg:aspect-square">
                 <Image
-                  src="/placeholder.svg?key=qbvg9"
+                  src="/placeholder.svg?height=600&width=600&query=Family enjoying eMart fish"
                   alt="Family enjoying eMart fish"
                   width={600}
                   height={600}
@@ -636,7 +676,7 @@ export default function AboutPage() {
                 <br />
                 Phone: (02) 8123-4567
                 <br />
-                Email: info@emartfish.ph
+                Email: info@oceanmart.ph
               </address>
             </div>
           </div>
