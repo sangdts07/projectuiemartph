@@ -28,12 +28,15 @@ export default function RegisterPage() {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true)
 
   // Check if user is already logged in
   useEffect(() => {
     const token = Cookies.get("auth-token")
     if (token) {
       router.push("/home")
+    } else {
+      setIsCheckingAuth(false)
     }
   }, [router])
 
@@ -51,6 +54,12 @@ export default function RegisterPage() {
     setError("")
 
     // Basic validation
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
+      setError("All fields are required")
+      setIsLoading(false)
+      return
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match")
       setIsLoading(false)
@@ -63,16 +72,30 @@ export default function RegisterPage() {
       return
     }
 
-    // Simulate API call
-    setTimeout(() => {
-      // For demo purposes, set a cookie and redirect to home
-      Cookies.set("auth-token", "new-user-token", { expires: 30 })
-      Cookies.set("user-email", formData.email, { expires: 30 })
-      Cookies.set("user-name", `${formData.firstName} ${formData.lastName}`, { expires: 30 })
+    try {
+      // Simulate API call
+      setTimeout(() => {
+        // For demo purposes, set a cookie and redirect to home
+        Cookies.set("auth-token", "new-user-token", { expires: 30 })
+        Cookies.set("user-email", formData.email, { expires: 30 })
+        Cookies.set("user-name", `${formData.firstName} ${formData.lastName}`, { expires: 30 })
 
+        setIsLoading(false)
+        router.push("/home")
+      }, 1500)
+    } catch (err) {
+      setError("An error occurred during registration. Please try again.")
       setIsLoading(false)
-      router.push("/home")
-    }, 1500)
+    }
+  }
+
+  // Show loading state while checking authentication
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    )
   }
 
   return (
@@ -101,6 +124,7 @@ export default function RegisterPage() {
                   value={formData.firstName}
                   onChange={handleChange}
                   required
+                  disabled={isLoading}
                 />
               </div>
               <div className="space-y-2">
@@ -112,6 +136,7 @@ export default function RegisterPage() {
                   value={formData.lastName}
                   onChange={handleChange}
                   required
+                  disabled={isLoading}
                 />
               </div>
             </div>
@@ -125,6 +150,7 @@ export default function RegisterPage() {
                 value={formData.email}
                 onChange={handleChange}
                 required
+                disabled={isLoading}
               />
             </div>
             <div className="space-y-2">
@@ -137,6 +163,7 @@ export default function RegisterPage() {
                 value={formData.password}
                 onChange={handleChange}
                 required
+                disabled={isLoading}
               />
             </div>
             <div className="space-y-2">
@@ -149,6 +176,7 @@ export default function RegisterPage() {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
+                disabled={isLoading}
               />
             </div>
             <div className="space-y-2">
@@ -174,6 +202,7 @@ export default function RegisterPage() {
                 placeholder="Optional"
                 value={formData.referralCode}
                 onChange={handleChange}
+                disabled={isLoading}
               />
             </div>
             <div className="flex items-center space-x-2">
@@ -183,6 +212,7 @@ export default function RegisterPage() {
                 checked={formData.agreeTerms}
                 onCheckedChange={(checked) => setFormData({ ...formData, agreeTerms: checked as boolean })}
                 required
+                disabled={isLoading}
               />
               <Label
                 htmlFor="agreeTerms"
@@ -195,7 +225,14 @@ export default function RegisterPage() {
               </Label>
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Creating account..." : "Create account"}
+              {isLoading ? (
+                <>
+                  <span className="mr-2 h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                  Creating account...
+                </>
+              ) : (
+                "Create account"
+              )}
             </Button>
           </form>
         </CardContent>
@@ -227,6 +264,7 @@ export default function RegisterPage() {
                   router.push("/home")
                 }, 1500)
               }}
+              disabled={isLoading}
             >
               Google
             </Button>
@@ -242,6 +280,7 @@ export default function RegisterPage() {
                   router.push("/home")
                 }, 1500)
               }}
+              disabled={isLoading}
             >
               Facebook
             </Button>

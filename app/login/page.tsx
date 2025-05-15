@@ -20,12 +20,15 @@ export default function LoginPage() {
   const [rememberMe, setRememberMe] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true)
 
   // Check if user is already logged in
   useEffect(() => {
     const token = Cookies.get("auth-token")
     if (token) {
       router.push("/home")
+    } else {
+      setIsCheckingAuth(false)
     }
   }, [router])
 
@@ -34,20 +37,41 @@ export default function LoginPage() {
     setIsLoading(true)
     setError("")
 
+    // Basic validation
+    if (!email || !password) {
+      setError("Email and password are required")
+      setIsLoading(false)
+      return
+    }
+
     // Simulate API call
-    setTimeout(() => {
+    try {
       // For demo purposes, set a cookie and redirect to home
       // In a real app, this would validate credentials with a backend
       const expiryDate = rememberMe ? 30 : 1 // days
       Cookies.set("auth-token", "demo-token-value", { expires: expiryDate })
       Cookies.set("user-email", email, { expires: expiryDate })
 
+      // Small delay to simulate API call
+      setTimeout(() => {
+        setIsLoading(false)
+        router.push("/home")
+      }, 1000)
+    } catch (err) {
+      setError("An error occurred during login. Please try again.")
       setIsLoading(false)
-      router.push("/home")
-    }, 1500)
+    }
   }
 
-  // Rest of the component remains the same
+  // Show loading state while checking authentication
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md">
@@ -75,6 +99,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                disabled={isLoading}
               />
             </div>
             <div className="space-y-2">
@@ -91,6 +116,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                disabled={isLoading}
               />
             </div>
             <div className="flex items-center space-x-2">
@@ -98,6 +124,7 @@ export default function LoginPage() {
                 id="remember"
                 checked={rememberMe}
                 onCheckedChange={(checked) => setRememberMe(checked as boolean)}
+                disabled={isLoading}
               />
               <Label
                 htmlFor="remember"
@@ -107,7 +134,14 @@ export default function LoginPage() {
               </Label>
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Signing in..." : "Sign in"}
+              {isLoading ? (
+                <>
+                  <span className="mr-2 h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                  Signing in...
+                </>
+              ) : (
+                "Sign in"
+              )}
             </Button>
           </form>
         </CardContent>
@@ -132,13 +166,15 @@ export default function LoginPage() {
               className="w-full"
               onClick={() => {
                 setIsLoading(true)
+                // Simulate social login
                 setTimeout(() => {
                   Cookies.set("auth-token", "google-token-value", { expires: 30 })
                   Cookies.set("user-email", "google-user@example.com", { expires: 30 })
                   setIsLoading(false)
                   router.push("/home")
-                }, 1500)
+                }, 1000)
               }}
+              disabled={isLoading}
             >
               Google
             </Button>
@@ -147,13 +183,15 @@ export default function LoginPage() {
               className="w-full"
               onClick={() => {
                 setIsLoading(true)
+                // Simulate social login
                 setTimeout(() => {
                   Cookies.set("auth-token", "facebook-token-value", { expires: 30 })
                   Cookies.set("user-email", "facebook-user@example.com", { expires: 30 })
                   setIsLoading(false)
                   router.push("/home")
-                }, 1500)
+                }, 1000)
               }}
+              disabled={isLoading}
             >
               Facebook
             </Button>

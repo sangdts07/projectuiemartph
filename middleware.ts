@@ -5,25 +5,24 @@ export function middleware(request: NextRequest) {
   // Get the path of the request
   const path = request.nextUrl.pathname
 
-  // Define public paths that don't require authentication
-  const isPublicPath =
-    path === "/login" || path === "/register" || path === "/forgot-password" || path === "/splash" || path === "/" // Root path redirects to splash
-
   // Check if the user is authenticated (has a session token)
   const isAuthenticated = request.cookies.has("auth-token")
 
-  // If at root path, redirect to splash
+  // Special case for root path - always redirect to splash
   if (path === "/") {
     return NextResponse.redirect(new URL("/splash", request.url))
   }
+
+  // Define public paths that don't require authentication
+  const isPublicPath = ["/login", "/register", "/forgot-password", "/splash"].includes(path)
 
   // If the user is not authenticated and trying to access a protected route, redirect to login
   if (!isAuthenticated && !isPublicPath) {
     return NextResponse.redirect(new URL("/login", request.url))
   }
 
-  // If the user is authenticated and trying to access login/register/splash, redirect to home page
-  if (isAuthenticated && (path === "/login" || path === "/register" || path === "/splash")) {
+  // If the user is authenticated and trying to access login/register/splash, redirect to home
+  if (isAuthenticated && isPublicPath) {
     return NextResponse.redirect(new URL("/home", request.url))
   }
 
@@ -40,7 +39,8 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - public files (public assets)
+     * - api routes
      */
-    "/((?!_next/static|_next/image|favicon.ico|images/).*)",
+    "/((?!_next/static|_next/image|favicon.ico|images/|api/).*)",
   ],
 }

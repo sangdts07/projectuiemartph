@@ -1,19 +1,24 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import Cookies from "js-cookie"
 
 export default function SplashPage() {
   const router = useRouter()
+  const [redirecting, setRedirecting] = useState(false)
 
   useEffect(() => {
     // Check if user is already authenticated
     const authToken = Cookies.get("auth-token")
 
-    // Redirect to login after 5 seconds if not authenticated
+    // Prevent multiple redirects
+    if (redirecting) return
+
+    // Redirect after 5 seconds
     const timer = setTimeout(() => {
+      setRedirecting(true)
       if (authToken) {
         router.push("/home")
       } else {
@@ -21,8 +26,10 @@ export default function SplashPage() {
       }
     }, 5000)
 
-    return () => clearTimeout(timer)
-  }, [router])
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [router, redirecting])
 
   return (
     <div className="h-screen w-full flex items-center justify-center bg-gradient-to-b from-primary-700 to-primary-900 overflow-hidden relative">

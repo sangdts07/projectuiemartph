@@ -1,153 +1,221 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Fish, ShoppingCart, User, Menu } from "lucide-react"
+import { Fish, Menu, X, ShoppingCart, User, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { useCart } from "@/lib/cart-context"
+import Cookies from "js-cookie"
 
 export default function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
-  const [isOpen, setIsOpen] = useState(false)
-  const { getItemCount } = useCart()
-  const itemCount = getItemCount()
+  const { cartItems } = useCart()
+  const [userEmail, setUserEmail] = useState<string | null>(null)
+  const [isClient, setIsClient] = useState(false)
+
+  // Get user email from cookie
+  useEffect(() => {
+    setIsClient(true)
+    const email = Cookies.get("user-email")
+    setUserEmail(email || null)
+  }, [])
+
+  const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0)
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+  }
+
+  const closeMenu = () => {
+    setIsMenuOpen(false)
+  }
+
+  const isActive = (path: string) => {
+    return pathname === path
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white">
-      <div className="container flex h-16 items-center px-4 md:px-6">
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="h-6 w-6" />
-              <span className="sr-only">Toggle menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-            <nav className="flex flex-col gap-4">
-              <Link href="/" className="flex items-center gap-2 text-lg font-semibold" onClick={() => setIsOpen(false)}>
-                <Fish className="h-6 w-6 text-primary-700" />
-                <span>OceanMart</span>
-              </Link>
-              <Link
-                href="/"
-                className={`text-lg font-medium ${pathname === "/" ? "text-primary-700" : "text-gray-500 hover:text-primary-700"}`}
-                onClick={() => setIsOpen(false)}
-              >
-                Home
-              </Link>
-              <Link
-                href="/fresh"
-                className={`text-lg font-medium ${pathname === "/fresh" ? "text-primary-700" : "text-gray-500 hover:text-primary-700"}`}
-                onClick={() => setIsOpen(false)}
-              >
-                Fresh
-              </Link>
-              <Link
-                href="/frozen"
-                className={`text-lg font-medium ${pathname === "/frozen" ? "text-primary-700" : "text-gray-500 hover:text-primary-700"}`}
-                onClick={() => setIsOpen(false)}
-              >
-                Frozen
-              </Link>
-              <Link
-                href="/high-supply"
-                className={`text-lg font-medium ${pathname === "/high-supply" ? "text-primary-700" : "text-gray-500 hover:text-primary-700"}`}
-                onClick={() => setIsOpen(false)}
-              >
-                High Supply
-              </Link>
-              <Link
-                href="/about"
-                className={`text-lg font-medium ${pathname === "/about" ? "text-primary-700" : "text-gray-500 hover:text-primary-700"}`}
-                onClick={() => setIsOpen(false)}
-              >
-                About
-              </Link>
-              <Link
-                href="/contact"
-                className={`text-lg font-medium ${pathname === "/contact" ? "text-primary-700" : "text-gray-500 hover:text-primary-700"}`}
-                onClick={() => setIsOpen(false)}
-              >
-                Contact
-              </Link>
-            </nav>
-          </SheetContent>
-        </Sheet>
-        <Link href="/" className="flex items-center gap-2 mr-6">
+      <div className="container flex h-16 items-center justify-between px-4 md:px-6">
+        <Link href="/home" className="flex items-center gap-2">
           <Fish className="h-6 w-6 text-primary-700" />
-          <span className="text-lg font-bold">OceanMart</span>
+          <span className="text-xl font-bold">OceanMart</span>
         </Link>
-        <nav className="hidden md:flex gap-6 flex-1">
+        <nav className="hidden md:flex gap-6">
           <Link
-            href="/"
-            className={`text-sm font-medium ${pathname === "/" ? "text-primary-700" : "text-gray-500 hover:text-primary-700"}`}
+            href="/home"
+            className={`text-sm font-medium ${
+              isActive("/home") ? "text-primary-700" : "text-gray-600 hover:text-primary-700"
+            }`}
           >
             Home
           </Link>
           <Link
             href="/fresh"
-            className={`text-sm font-medium ${pathname === "/fresh" ? "text-primary-700" : "text-gray-500 hover:text-primary-700"}`}
+            className={`text-sm font-medium ${
+              isActive("/fresh") ? "text-primary-700" : "text-gray-600 hover:text-primary-700"
+            }`}
           >
-            Fresh
+            Fresh Fish
           </Link>
           <Link
             href="/frozen"
-            className={`text-sm font-medium ${pathname === "/frozen" ? "text-primary-700" : "text-gray-500 hover:text-primary-700"}`}
+            className={`text-sm font-medium ${
+              isActive("/frozen") ? "text-primary-700" : "text-gray-600 hover:text-primary-700"
+            }`}
           >
-            Frozen
+            Frozen Fish
           </Link>
           <Link
             href="/high-supply"
-            className={`text-sm font-medium ${pathname === "/high-supply" ? "text-primary-700" : "text-gray-500 hover:text-primary-700"}`}
+            className={`text-sm font-medium ${
+              isActive("/high-supply") ? "text-primary-700" : "text-gray-600 hover:text-primary-700"
+            }`}
           >
             High Supply
           </Link>
           <Link
             href="/about"
-            className={`text-sm font-medium ${pathname === "/about" ? "text-primary-700" : "text-gray-500 hover:text-primary-700"}`}
+            className={`text-sm font-medium ${
+              isActive("/about") ? "text-primary-700" : "text-gray-600 hover:text-primary-700"
+            }`}
           >
             About
           </Link>
           <Link
             href="/contact"
-            className={`text-sm font-medium ${pathname === "/contact" ? "text-primary-700" : "text-gray-500 hover:text-primary-700"}`}
+            className={`text-sm font-medium ${
+              isActive("/contact") ? "text-primary-700" : "text-gray-600 hover:text-primary-700"
+            }`}
           >
             Contact
           </Link>
         </nav>
         <div className="flex items-center gap-4">
-          <Link href="/cart">
-            <Button variant="ghost" size="icon" className="relative">
-              <ShoppingCart className="h-5 w-5" />
-              <span className="sr-only">Cart</span>
-              {itemCount > 0 && (
-                <span className="absolute top-0 right-0 h-4 w-4 rounded-full bg-primary-700 text-[10px] font-medium text-white flex items-center justify-center">
-                  {itemCount}
-                </span>
-              )}
-            </Button>
+          <Link href="/cart" className="relative">
+            <ShoppingCart className="h-5 w-5 text-gray-600" />
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-primary-700 text-[10px] font-medium text-white">
+                {totalItems}
+              </span>
+            )}
+            <span className="sr-only">Cart</span>
           </Link>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <User className="h-5 w-5" />
-                <span className="sr-only">Account</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem asChild>
-                <Link href="/login">Login</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/register">Create Account</Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+
+          {isClient && userEmail && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="rounded-full">
+                  <User className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>{userEmail}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/profile">Profile</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/orders">Orders</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/logout" className="text-red-500 flex items-center">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Logout
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+
+          <Button variant="ghost" size="icon" className="md:hidden" onClick={toggleMenu}>
+            <Menu className="h-6 w-6" />
+            <span className="sr-only">Toggle menu</span>
+          </Button>
         </div>
       </div>
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-50 bg-white md:hidden">
+          <div className="container flex h-16 items-center justify-between px-4">
+            <Link href="/home" className="flex items-center gap-2" onClick={closeMenu}>
+              <Fish className="h-6 w-6 text-primary-700" />
+              <span className="text-xl font-bold">OceanMart</span>
+            </Link>
+            <Button variant="ghost" size="icon" onClick={closeMenu}>
+              <X className="h-6 w-6" />
+              <span className="sr-only">Close menu</span>
+            </Button>
+          </div>
+          <nav className="container grid gap-6 px-4 py-6">
+            <Link
+              href="/home"
+              className={`text-lg font-medium ${isActive("/home") ? "text-primary-700" : "text-gray-600"}`}
+              onClick={closeMenu}
+            >
+              Home
+            </Link>
+            <Link
+              href="/fresh"
+              className={`text-lg font-medium ${isActive("/fresh") ? "text-primary-700" : "text-gray-600"}`}
+              onClick={closeMenu}
+            >
+              Fresh Fish
+            </Link>
+            <Link
+              href="/frozen"
+              className={`text-lg font-medium ${isActive("/frozen") ? "text-primary-700" : "text-gray-600"}`}
+              onClick={closeMenu}
+            >
+              Frozen Fish
+            </Link>
+            <Link
+              href="/high-supply"
+              className={`text-lg font-medium ${isActive("/high-supply") ? "text-primary-700" : "text-gray-600"}`}
+              onClick={closeMenu}
+            >
+              High Supply
+            </Link>
+            <Link
+              href="/about"
+              className={`text-lg font-medium ${isActive("/about") ? "text-primary-700" : "text-gray-600"}`}
+              onClick={closeMenu}
+            >
+              About
+            </Link>
+            <Link
+              href="/contact"
+              className={`text-lg font-medium ${isActive("/contact") ? "text-primary-700" : "text-gray-600"}`}
+              onClick={closeMenu}
+            >
+              Contact
+            </Link>
+            {userEmail && (
+              <>
+                <div className="h-px bg-gray-200" />
+                <div className="py-2">
+                  <p className="text-sm text-gray-500">Signed in as:</p>
+                  <p className="font-medium">{userEmail}</p>
+                </div>
+                <Link href="/logout" className="flex items-center text-red-500 font-medium" onClick={closeMenu}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Logout
+                </Link>
+              </>
+            )}
+          </nav>
+        </div>
+      )}
     </header>
   )
 }
