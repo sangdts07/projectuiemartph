@@ -538,7 +538,7 @@ export const allFish: Fish[] = [
     nameFil: "Espada",
     description: "A large predatory fish with firm, meaty flesh, perfect for grilling or pan-searing.",
     price: 350,
-    image: "/placeholder.svg?key=espada",
+    image: "/images/espada.jpeg",
     category: FishCategory.SALTWATER,
     origin: "Batangas, Philippines",
     isHighSupply: false,
@@ -548,6 +548,24 @@ export const allFish: Fish[] = [
     weight: {
       min: 1.0,
       max: 3.0,
+    },
+  },
+  {
+    id: "espada-frozen",
+    nameEn: "Swordfish",
+    nameFil: "Espada",
+    description: "Frozen swordfish steaks, perfect for grilling with minimal seasoning to enjoy its natural flavor.",
+    price: 220,
+    image: "/images/espada.jpeg",
+    category: FishCategory.SALTWATER,
+    origin: "Batangas, Philippines",
+    isHighSupply: false,
+    isOnSale: false,
+    isFrozen: true,
+    supplyLevel: 6,
+    weight: {
+      min: 0.8,
+      max: 2.0,
     },
   },
   {
