@@ -1,0 +1,77 @@
+/* Input and textarea focus animations */
+.contact-input {
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.contact-input:focus {
+  border-bottom-color: #a7bf8f;
+  box-shadow: 0 4px 6px -1px rgba(167, 191, 143, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Social media button animations */
+.social-button {
+  transition: all 0.3s ease;
+}
+
+.social-button:hover {
+  transform: translateY(-3px) rotate(8deg);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Map hover effect */
+.map-container {
+  overflow: hidden;
+  border-radius: 0.75rem;
+  transition: all 0.5s ease;
+}
+
+.map-container:hover img {
+  transform: scale(1.05);
+}
+
+/* FAQ card hover effect */
+.faq-card {
+  transition: all 0.3s ease;
+}
+
+.faq-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Form success animation */
+@keyframes success-pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.success-icon {
+  animation: success-pulse 0.6s ease-in-out;
+}
+
+/* Contact info icon hover effect */
+.contact-icon-container {
+  transition: all 0.3s ease;
+}
+
+.contact-icon-container:hover {
+  transform: scale(1.1);
+  background-color: rgba(167, 191, 143, 0.2);
+}
+
+.contact-icon-container:hover svg {
+  transform: rotate(10deg);
+}
