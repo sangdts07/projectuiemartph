@@ -3,14 +3,22 @@
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
+import Cookies from "js-cookie"
 
 export default function SplashPage() {
   const router = useRouter()
 
   useEffect(() => {
-    // Redirect to login after 5 seconds
+    // Check if user is already authenticated
+    const authToken = Cookies.get("auth-token")
+
+    // Redirect to login after 5 seconds if not authenticated
     const timer = setTimeout(() => {
-      router.push("/login")
+      if (authToken) {
+        router.push("/home")
+      } else {
+        router.push("/login")
+      }
     }, 5000)
 
     return () => clearTimeout(timer)

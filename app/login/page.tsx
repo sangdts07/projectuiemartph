@@ -25,7 +25,7 @@ export default function LoginPage() {
   useEffect(() => {
     const token = Cookies.get("auth-token")
     if (token) {
-      router.push("/")
+      router.push("/home")
     }
   }, [router])
 
@@ -43,10 +43,11 @@ export default function LoginPage() {
       Cookies.set("user-email", email, { expires: expiryDate })
 
       setIsLoading(false)
-      router.push("/")
+      router.push("/home")
     }, 1500)
   }
 
+  // Rest of the component remains the same
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md">
@@ -135,7 +136,7 @@ export default function LoginPage() {
                   Cookies.set("auth-token", "google-token-value", { expires: 30 })
                   Cookies.set("user-email", "google-user@example.com", { expires: 30 })
                   setIsLoading(false)
-                  router.push("/")
+                  router.push("/home")
                 }, 1500)
               }}
             >
@@ -150,7 +151,7 @@ export default function LoginPage() {
                   Cookies.set("auth-token", "facebook-token-value", { expires: 30 })
                   Cookies.set("user-email", "facebook-user@example.com", { expires: 30 })
                   setIsLoading(false)
-                  router.push("/")
+                  router.push("/home")
                 }, 1500)
               }}
             >

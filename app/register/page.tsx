@@ -33,7 +33,7 @@ export default function RegisterPage() {
   useEffect(() => {
     const token = Cookies.get("auth-token")
     if (token) {
-      router.push("/")
+      router.push("/home")
     }
   }, [router])
 
@@ -71,7 +71,7 @@ export default function RegisterPage() {
       Cookies.set("user-name", `${formData.firstName} ${formData.lastName}`, { expires: 30 })
 
       setIsLoading(false)
-      router.push("/")
+      router.push("/home")
     }, 1500)
   }
 
@@ -224,7 +224,7 @@ export default function RegisterPage() {
                   Cookies.set("auth-token", "google-token-value", { expires: 30 })
                   Cookies.set("user-email", "google-user@example.com", { expires: 30 })
                   setIsLoading(false)
-                  router.push("/")
+                  router.push("/home")
                 }, 1500)
               }}
             >
@@ -239,7 +239,7 @@ export default function RegisterPage() {
                   Cookies.set("auth-token", "facebook-token-value", { expires: 30 })
                   Cookies.set("user-email", "facebook-user@example.com", { expires: 30 })
                   setIsLoading(false)
-                  router.push("/")
+                  router.push("/home")
                 }, 1500)
               }}
             >
