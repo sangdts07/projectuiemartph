@@ -57,8 +57,16 @@ export default function FishDetailPage({ params }: { params: { id: string } }) {
       <main className="flex-1">
         <div className="container px-4 py-8 md:px-6 md:py-12">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
-            <div className="relative aspect-square overflow-hidden rounded-lg">
-              <Image src={fish.image || "/placeholder.svg"} alt={fish.nameEn} fill className="object-cover" priority />
+            <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
+              <Image
+                src={fish.image || "/placeholder.svg"}
+                alt={fish.nameEn}
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+                priority
+                quality={85}
+              />
               {fish.isHighSupply && <Badge className="absolute top-4 right-4 bg-primary-700">High Supply</Badge>}
               {fish.isOnSale && <Badge className="absolute top-4 left-4 bg-red-500">Sale</Badge>}
             </div>
@@ -245,7 +253,7 @@ export default function FishDetailPage({ params }: { params: { id: string } }) {
                 <br />
                 Phone: (02) 8123-4567
                 <br />
-                Email: info@emartfish.ph
+                Email: info@oceanmart.ph
               </address>
             </div>
           </div>

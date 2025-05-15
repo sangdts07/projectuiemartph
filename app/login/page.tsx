@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Fish } from "lucide-react"
@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import Cookies from "js-cookie"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -20,6 +21,14 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
 
+  // Check if user is already logged in
+  useEffect(() => {
+    const token = Cookies.get("auth-token")
+    if (token) {
+      router.push("/")
+    }
+  }, [router])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
@@ -27,7 +36,12 @@ export default function LoginPage() {
 
     // Simulate API call
     setTimeout(() => {
-      // For demo purposes, just redirect to home
+      // For demo purposes, set a cookie and redirect to home
+      // In a real app, this would validate credentials with a backend
+      const expiryDate = rememberMe ? 30 : 1 // days
+      Cookies.set("auth-token", "demo-token-value", { expires: expiryDate })
+      Cookies.set("user-email", email, { expires: expiryDate })
+
       setIsLoading(false)
       router.push("/")
     }, 1500)
@@ -112,10 +126,34 @@ export default function LoginPage() {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <Button variant="outline" className="w-full">
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => {
+                setIsLoading(true)
+                setTimeout(() => {
+                  Cookies.set("auth-token", "google-token-value", { expires: 30 })
+                  Cookies.set("user-email", "google-user@example.com", { expires: 30 })
+                  setIsLoading(false)
+                  router.push("/")
+                }, 1500)
+              }}
+            >
               Google
             </Button>
-            <Button variant="outline" className="w-full">
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => {
+                setIsLoading(true)
+                setTimeout(() => {
+                  Cookies.set("auth-token", "facebook-token-value", { expires: 30 })
+                  Cookies.set("user-email", "facebook-user@example.com", { expires: 30 })
+                  setIsLoading(false)
+                  router.push("/")
+                }, 1500)
+              }}
+            >
               Facebook
             </Button>
           </div>
